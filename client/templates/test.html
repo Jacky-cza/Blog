@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEST</title>
+    <script src="/static/js/jquery.min.js" ></script>
+</head>
+<body id="show">
+     <script>
+     <!--//前后端分离-->
+     <!--1.用户请求到该页面后,js立刻发出异步请求[跨域]至后端服务器[django:8000]-->
+     <!--2.后端服务器返回json数据;-->
+     <!--3.js根据后端返回的数据进行动态页面渲染-->
+
+         $(function(){
+            $.ajax({
+                "type":"get",
+                "url":"http://127.0.0.1:8000/v1/users",
+                "dataType":"json",
+                "success":function(res){
+                    console.log(res);
+                    var html="";
+                    html+="<table border=1>";
+                    html+="<tr>";
+                    html+="<td>username</td>";
+                    html+="<td>email</td>";
+                    html+="</tr>";
+                    $.each(res.data,function(i,v){
+                        html+="<tr>";
+                        html+="<td>"+v.username+"</td>";
+                        html+="<td>"+v.email+"</td>";
+                        html+="</tr>";
+                    })
+                    $("#show").html(html);
+              }
+            })
+         })
+     </script>
+</body>
+</html>
